@@ -55,9 +55,9 @@ class PWindow extends PApplet {
     surface.setTitle("Sketch 2 - Control Panel");
     surface.setLocation(925, 25);
 
-    s1 = new Slider(50, 100, 300, "Radius", 50, 200, 100);
-    s2 = new Slider(50, 250, 300, "Stroke", 2, 8, 2);
-    b1 = new Button(200, 400, true);
+    s1 = new Slider(300, 250, 300, "Radius", 50, 200, 100);
+    s2 = new Slider(300, 400, 300, "Stroke", 2, 8, 2);
+    b1 = new Button(450, 525, false);
 
     sketch2Loaded = true; // inform sketch 1 on load
   }
