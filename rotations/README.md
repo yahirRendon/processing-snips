@@ -25,4 +25,4 @@ PVector rotation(PVector vec, float angle) {
 
 In the sketch a sine wave is created using the built in sin() function and is displayed as the black sine wave. The red sine wave displays the rotated values returned by the rotation function. To place the origin of the sine wave at any desired location an offset amount is added to the generated values from the original sine wave (black) and the rotated sine wave (red). 
 
-![Rotated Sine Gif](https://github.com/yahirRendon/Rotations/blob/main/_videos/sineRotate.gif)
+![Rotated Sine Gif](https://github.com/yahirRendon/Processing_Snips/blob/main/rotations/data/sineRotate.gif)
