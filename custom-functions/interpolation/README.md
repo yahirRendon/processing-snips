@@ -123,6 +123,117 @@ Enjoy!
 <img alt="sine interpolation" width="600" align="center" src="https://github.com/yahirRendon/processing-snips/blob/main/custom-functions/interpolation/interpolation-code/data/sine_interp_anim.gif"/>
 </p>
 
+
+<details>
+  <summary>serp functions</summary>
+  
+  ```java
+  /**
+   * Interpolation function using the sine in easing function
+   * by easing.net
+   *
+   * @param {int}   a      first value
+   * @param {int}   b      second value
+   * @param {float} t      amt between 0.0 and 1.0
+   * @return               value between first and second value given t
+   */
+   float serpIn(int a, int b, float t) {
+    if(t <= 0) return a;
+    if(t >= 1) return b;
+    float in_t = 1 - cos((t * PI) / 2);
+    return a + (b - a) * in_t;  
+   }
+ ```
+ ```java
+ /**
+  * Inverse interpolation for sine in interpolation. Pass a value
+  * between the first and second value to get the corresponding 
+  * value between 0.0 and 1.0 based on sine in easing. 
+  *
+  * @param {int}   a      first value
+  * @param {int}   b      second value
+  * @param {float} v      value between first and second value
+  * @return               value between 0.0 and 1.0 given v per sine in easing
+  */
+  float serpInInverse(int a, int b, float v) {
+    if(v <= a) return 0.0;
+    if(v >= b) return 1.0;  
+    float t = (v - a) / (b - a);
+    return (2 * acos(1-t)) / PI; 
+  }
+ ```
+ ```java
+ /**
+  * Interpolation function using the sine out easing function
+  * by easing.net
+  *
+  * @param {int}   a      first value
+  * @param {int}   b      second value
+  * @param {float} t      amt between 0.0 and 1.0
+  * @return               value between first and second value given t
+  */
+  float serpOut(int a, int b, float t) {
+    if(t <= 0) return a;
+    if(t >= 1) return b;
+    float out_t = sin((t * PI) / 2);
+    return a + (b - a) * out_t;
+  }
+ ```
+ ```java
+ /** 
+  * Inverse interpolation for sine out interpolation. Pass a value
+  * between the first and second value to get the corresponding 
+  * value between 0.0 and 1.0 based on sine out easing. 
+  *
+  * @param {int}   a      first value
+  * @param {int}   b      second value
+  * @param {float} v      value between first and second value
+  * @return               value between 0.0 and 1.0 given v per sine out easing
+  */
+  float serpOutInverse(int a, int b, float v) {
+    if(v <= a) return 0.0;
+    if(v >= b) return 1.0;  
+    float t = (v - a) / (b - a);
+    return (2 * asin(t)) / PI;  
+  }
+ ```
+ ```java
+ /**
+  * Interpolation function using the sine in out easing function
+  * by easing.net
+  *
+  * @param a      first value
+  * @param b      second value
+  * @param t      amt between 0.0 and 1.0
+  * @return       value between first and second value at t
+  */
+  float serpInOut(int a, int b, float t) {
+    if(t <= 0) return a;
+    if(t >= 1) return b;
+    float out_t = -(cos(PI * t) - 1) / 2;
+    return a + (b - a) * out_t;
+  }
+ ```
+ ```java
+ /** 
+  * Inverse interpolation for sine in out interpolation. Pass a value
+  * between the first and second value to get the corresponding 
+  * value between 0.0 and 1.0 based on sine in out easing. 
+  *
+  * @param {int}   a      first value
+  * @param {int}   b      second value
+  * @param {float} v      value between first and second value
+  * @return               value between 0.0 and 1.0 given v per sine in/out easing
+  */
+  float serpInOutInverse(int a, int b, float v) {
+    if(v <= a) return 0.0;
+    if(v >= b) return 1.0;  
+    float t = (v - a) / (b - a);
+    return acos(-(2 * t) + 1) / PI;  
+  }
+ ```
+</details>
+
 <p align="center">
 <img alt="quad interpolation" width="600" align="center" src="https://github.com/yahirRendon/processing-snips/blob/main/custom-functions/interpolation/interpolation-code/data/quad_interp_anim.gif"/>
 </p>
