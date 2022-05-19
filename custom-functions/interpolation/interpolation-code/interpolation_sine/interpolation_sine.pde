@@ -22,7 +22,7 @@
  
 // elements needed for interpolation
 float t = 0.0;          // t is a value between 0.0 and 1.0 used for interpolation.
-                        // sometimes consider in terms of time or frames
+                        // usually consider in terms of time or frames
 float tspd = 0.005;     // tspd is the value at which t grows per frame
 
 // display blocks for showing example, curve, and inverse
@@ -57,22 +57,25 @@ void setup() {
   blockInOut = new Block();
   
   // for testing values coming in and out of functions
-  // t steps passed into interpolation function
-  ArrayList<Float> tvalues = new ArrayList<Float>(); 
-  // result of interpolation when passing in t value between 0.0 and 1.0
-  ArrayList<Float> values = new ArrayList<Float>();
-  //for(float i = 0; i < 1.0; i+=0.1) {
-  //  tvalues.add(i);
-  //  values.add(serpInOut(0, 255, i));
-  //}
-  
-  //for(int i = 0; i < tvalues.size(); i++) {
-  //  // print t step, intep result given t, inverse given inter result: should return initial t step
-  //  print(tvalues.get(i), values.get(i), serpInOutInverse(0, 255, values.get(i)));
-  //  println();
-  //}
-  
-  delay(8000);
+  float priorResult = 0.0;
+  for(float i = 0; i < 1.01; i+=0.1) {
+    float ival = (float)(Math.round(i * Math.pow(10, 1))
+                 / Math.pow(10, 1));
+    float lerpResult = serpIn(0, 100, ival);
+    lerpResult = (float)(Math.round(lerpResult * Math.pow(10, 1))
+                 / Math.pow(10, 1));
+    float invLerpResult = serpInInverse(0, 100, lerpResult);
+    invLerpResult = (float)(Math.round(invLerpResult * Math.pow(10, 1))
+                 / Math.pow(10, 1));
+    
+    float dif = lerpResult - priorResult;
+    dif = (float)(Math.round(dif * Math.pow(10, 1))
+                 / Math.pow(10, 1));
+    priorResult = lerpResult;
+                            
+    println(ival + ", " + lerpResult  + ", " + dif  + ", " + lerpResult  + ", " + invLerpResult);
+    
+  }
 }
 
 /**************************************************************
@@ -152,6 +155,11 @@ void setup() {
    text("Out", 75, 325);
    text("In/Out", 75, 475);
    
+   text("v", 245, 175);
+   text("t", 300, 230);
+   text("v", 395, 175);
+   text("t", 450, 230);
+   
    // in display
    blockIn.display(100, 125, "Example");
    blockIn.displayInterpolation(250, 125, "Graph");
@@ -166,6 +174,8 @@ void setup() {
    blockInOut.display(100, 425, "");
    blockInOut.displayInterpolation(250, 425, "");
    blockInOut.displayInverse(400, 425, "");
+   
+   //saveFrame("output/sine_interp_####.png");
      
  }
  
@@ -193,7 +203,7 @@ float linearLerp(int a, int b, float t) {
 * @param {float} v      value between first and second value
 * @return               value between 0.0 and 1.0 given v per linear easing
 */
-float LinearLerpInverse(int a, int b, float v) {
+float lerpInverse(int a, int b, float v) {
   if(v <= a) return 0.0;
   if(v >= b) return 1.0;
   return (v - a) / (b - a);
