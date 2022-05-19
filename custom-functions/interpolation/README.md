@@ -76,6 +76,7 @@ For an example of a nonlinear interpolation, we can take a look at the serpIn an
 </p>
 <p>
 t = 1 - cos((t * PI) / 2)
+<br>
 a + (b - a) * t
 </p>
 
@@ -84,7 +85,8 @@ To obtain the inverse function it is necessary to solve for t same as we did for
 </p>
 <p>
 t = (v - a) / (b - a)
-return (2 * arccos(1-t)) / PI
+<br>
+(2 * arccos(1-t)) / PI
 </p>
 
 <p>
@@ -106,7 +108,19 @@ Below you will see a similar table used for logging the results of the lerp and 
 1.0| 100.0| **15.6** | 100.0| 1.0
 
 <p>
-To see this in a more visual representation I’ve created sketches in Processing that displays the interpolation functions in three ways. The left most square is a practical example of fading in the background color of the square based on the interpolation function. The center square is graphing the result of the lerp function with the x-axis representing t values between 0.0 and 1.0, and the y-axis representing the v value for the desired range of 0 – 255 (common value used for rgb colors). The right most square graphs the result of the inverse function with the x- and y-axis being the t and v values respectively. You will notice that the interpolation function will have a curve for any nonlinear interpolation while the same inverse function will be linear. This indicates the functions are working correctly as supported by the table above in that the v values have nonlinear growth while the t values are always linear (incrementing by 0.1). 
+The center square is graphing the result of the lerp function with the x-axis representing t values between 0.0 and 1.0, and the y-axis representing the v value for the desired range of 0 – 255 (common value used for rgb colors). The right most square graphs the result of the inverse function with the x- and y-axis being the t and v values respectively. Additionally, for most curves you will have the option for an in, out, and an in/out curve. This will be labeled to the left of the left most square. 
+</p>
+
+<p>
+Finally, you will notice that the interpolation function will have a curve for any nonlinear interpolation while the same inverse function will be linear. This indicates the functions are working correctly as supported by the table above in that the v values have nonlinear growth while the t values are always linear (incrementing by 0.1). 
+</p>
+
+<p>
+Enjoy!
+</p>
+
+<p align="center">
+<img alt="sine in interpolation" width="600" align="center" src="https://github.com/yahirRendon/processing-snips/blob/main/custom-functions/interpolation/interpolation-code/data/sine_interp_anim.gif"/>
 </p>
 
 <!-- <p align="center">
