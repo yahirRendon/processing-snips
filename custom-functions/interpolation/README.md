@@ -1,27 +1,114 @@
 <h1 align="center">Interpolation Functions</h1>
 
 <p>
-I found myself watching a YouTube video in which <a href="https://www.youtube.com/watch?v=R6UB7mVO3fY">Freya Holmer</a> discussed the simple yet power math we don't talk enough about in game development. This was a presentation with a similar name done at Indiecade Europe 2019. The first example provided was that of linear interpolation, also known as lerp. Something, I was loosely aware of from working with Processing. I was intrigued by two things during the speech. First, how similar lerp was to a mapping function in which you map one range of values to another range. Second, was the introduction of an inverse interpolation function. Processing doesn't have a built-in function for inverse lerp. I decided to explore this a bit more and thought about different types of nonlinear interpolation.
+I watched a presentation from Indiecade Europe 2019 in <a href="https://www.youtube.com/watch?v=R6UB7mVO3fY">Freya Holmer</a> discussed the simple yet power math we don't talk enough about within in game development. The first example provided was that of linear interpolation, also known as lerp. However, what I was most intrigued by was the introduction of inverse interpolation. I’ve used lerp in Processing previously but I realized it doesn’t have a built-in function for inverse lerp. I decided to create my own while also explore more nonlinear interpolations functions.
 </p>
 
 <h3>Goal</h3>
 <p>
-To create an inverse linear interpolation function as well as other nonlinear interpolation functions.
+Create additional nonlinear interpolations functions along with their corresponding inverse functions.
 </p>
 
 <h3>Challenges</h3>
 <p>
-Creating an inverse lerp function was not too difficult once I understood how the lerp function worked. Lerp takes three parameters: a, known as the start value; b, the end value; and t, which is a value between 0.0 and 1.0. The function returns a value between a and b that corresponds with t, which can be thought of as a percentage between the range comprised of a and b. In linear interpolation this found by the following formula: v = a + (b - a) * t.
+The inverse function was easy to create once the lerp function is understood. The lerp function in most settings looks like this:
+</p>
+<p>
+lerp(a, b, t)
 </p>
  
 <p>
-For example, say we provide the range 0-100 and want the corresponding value at 0.5. Our formula would look like: 0 + (100 - 0) * 0.5 = 50. Let's say we want the value at 0.75: 0 + (100 - 0) * 0.75 = 75. Or, the value at 0.25: 0 + (100 - 0) * 0.25 = 25. As we can see, we are returning values in a linear fashion as t increments. Given the lerp formula we can find the inverse function by simply solving for t. The resulting formula being t = (v - a) / (b - a). The inverse function returns t given a value between a and b. For example, we can bass 50 into an inverse lerp function to get the t value of 0.5: (50 - 0) / (100 - 0) = 0.5. So, the interpolation function returns a value between a range given t while the inverse interpolation function returns a t value between 0.0 and 1.0 given a value between a specified range.
+The a and b parameters are the beginning and ending of a desired number range while t is a value between 0.0 and 1.0. The function returns a value between a and b that linearly corresponds with a given t. In linear interpolation the desired value is found by the following formula: 
+</p>
+<p>
+v = a + (b - a) * t
 </p>
  
 <p>
-With this in mind, I recalled using easing function provided by Andrey Sitnik and Ivan Solovev from <a href="https://easings.net">easings.net</a>. A great resource with various easing curves that can be useful in many ways. Provided their easing formulas I was able to convert the function into an interpolation function and be solving for t, I was able to develop my own inverse functions. A fun math challenge that I hope can be useful to others should they need them.
+Below is a table that shows the resulting values between the number range of 0 and 100 as t increments by 0.1 along with the rate of change in the v result from the current return value and the prior return value.  
 </p>
- 
+
+**t amt**|**v given t (lerp)**|**difference**
+:-----:|:-----:|:-----:
+0.0| 0.0| 0
+0.1| 10.0| 10
+0.2| 20.0| 10
+0.3| 30.0| 10
+0.4| 40.0| 10
+0.5| 50.0| 10
+0.6| 60.0| 10
+0.7| 70.0| 10
+0.8| 80.0| 10
+0.9| 90.0| 10
+1.0| 100.0| 10
+
+<p>
+To create an inverse interpolation function, one simply has to take the lerp formula and solving for t instead of v. This inverse formula for linear interpolation is as follows:
+</p>
+<p>
+t = (v - a) / (b - a)
+</p>
+
+<p>
+The inverse function returns t, a value between 0.0 and 1.0 given a value between the specified range of a and b. Below is the same table from before with a couple of added columns in which the output of the lerp function, v, is passed into the inverse lerp function to get t. As you will see passing in t to get v in the lerp function returns the inverse values when passing v to get t using the inverse lerp function. 
+</p>
+
+**t amt**|**v given t (lerp)**|**difference**|**v value**|**t given v (inv. lerp)**
+:-----:|:-----:|:-----:|:-----:|:-----:
+0.0| 0.0| 10| 0| 0.0
+0.1| 10.0| 10| 10.0| 0.1
+0.2| 20.0| 10| 20.0| 0.2
+0.3| 30.0| 10| 30.0| 0.3
+0.4| 40.0| 10| 40.0| 0.4
+0.5| 50.0| 10| 50.0| 0.5
+0.6| 60.0| 10| 60.0| 0.6
+0.7| 70.0| 10| 70.0| 0.7
+0.8| 80.0| 10| 80.0| 0.8
+0.9| 90.0| 10| 90.0| 0.9
+1.0| 100.0| 10| 100.0| 1.0
+
+<p>
+With this in mind, I recalled using the easing functions developed by Andrey Sitnik and Ivan Solovev from <a href="https://easings.net/">easings.net</a> in other projects. The easing functions are a great resource with various easing curves that can be very useful in various situations. Given their easing formulas I was able to convert several easing functions into interpolation functions and be solving for t, I was able to develop my own corresponding inverse functions. This was a fun math challenge that I hope can be useful to myself and others should such functions ever be needed. 
+</p>
+
+<p>
+For an example of a nonlinear interpolation, we can take a look at the serpIn and serpInInverse functions I created. These use sine in interpolation to map the desired range between a and b. The serpIn formula is as follows:
+</p>
+<p>
+t = 1 - cos((t * PI) / 2)
+a + (b - a) * t
+</p>
+
+<p>
+To obtain the inverse function it is necessary to solve for t same as we did for linear interpolation function to get the following:
+</p>
+<p>
+t = (v - a) / (b - a)
+return (2 * arccos(1-t)) / PI
+</p>
+
+<p>
+Below you will see a similar table used for logging the results of the lerp and inverse lerp function but now using serpIn and serpInInverse for the same range between 0 and 100. The first thing to take note of is the difference column as you will notice the change is now nonlinear. Second, that passing in t to get the corresponding v value in the serpIn function is in fact the inverse of passing in v to get the corresponding t value using the serpInInverse function.  
+</p>
+
+**t amt**|**v given t (serpIn)**|**difference**|**v value**|**t given v (inv. serpIn)**
+:-----:|:-----:|:-----:|:-----:|:-----:
+0.0| 0.0| **0.0** | 0.0| 0.0
+0.1| 1.2| **1.2** | 1.2| 0.1
+0.2| 4.9| **3.7** | 4.9| 0.2
+0.3| 10.9| **6.0** | 10.9| 0.3
+0.4| 19.1| **8.2** | 19.1| 0.4
+0.5| 29.3| **10.2** | 29.3| 0.5
+0.6| 41.2| **11.9** | 41.2| 0.6
+0.7| 54.6| **13.4** | 54.6| 0.7
+0.8| 69.1| **14.5** | 69.1| 0.8
+0.9| 84.4| **15.3** | 84.4| 0.9
+1.0| 100.0| **15.6** | 100.0| 1.0
+
+<p>
+To see this in a more visual representation I’ve created sketches in Processing that displays the interpolation functions in three ways. The left most square is a practical example of fading in the background color of the square based on the interpolation function. The center square is graphing the result of the lerp function with the x-axis representing t values between 0.0 and 1.0, and the y-axis representing the v value for the desired range of 0 – 255 (common value used for rgb colors). The right most square graphs the result of the inverse function with the x- and y-axis being the t and v values respectively. You will notice that the interpolation function will have a curve for any nonlinear interpolation while the same inverse function will be linear. This indicates the functions are working correctly as supported by the table above in that the v values have nonlinear growth while the t values are always linear (incrementing by 0.1). 
+</p>
+
 <!-- <p align="center">
   <img alt="Trominotris" width="300" align="center" src="https://github.com/yahirRendon/veiled-project/blob/main/projects/binary_message_public/output/binary_msg_visual.png" alt="visual"/>
   <img alt="Sweep Game" width="300" align="center" src="https://github.com/yahirRendon/veiled-project/blob/main/projects/binary_message_public/output/binary_msg_binary.png" alt="binary"/>
