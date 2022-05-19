@@ -91,6 +91,7 @@ class Block {
     fill(dark);
     stroke(dark);
     text(title, x + blockSize/2, y - 15);
+   
     
     // block boundary rect
     noFill();
@@ -142,16 +143,16 @@ class Block {
     rect(x, y, blockSize, blockSize, 5, 0, 5, 0);
     
     // graphing inverse results given raw nums against those raw nums 
-    stroke(teal);
-    fill(teal);
-    for(int i = 0; i < rawNums.size(); i++) { 
-      float xval = inverseResults_raw.get(i);
-      float yval = rawNums.get(i);
+    //stroke(teal);
+    //fill(teal);
+    //for(int i = 0; i < rawNums.size(); i++) { 
+    //  float xval = inverseResults_raw.get(i);
+    //  float yval = rawNums.get(i);
      
-      float xpos = x + map(xval, 0, 1, padding, blockSize - padding);
-      float ypos = y + blockSize - map(yval, 0, 201, padding, blockSize - padding);         
-      ellipse(xpos, ypos, 2, 2);
-    }
+    //  float xpos = x + map(xval, 0, 1, padding, blockSize - padding);
+    //  float ypos = y + blockSize - map(yval, 0, 201, padding, blockSize - padding);         
+    //  ellipse(xpos, ypos, 2, 2);
+    //}
     
     // graphing time steps and inverse based on t results
     stroke(purple);
