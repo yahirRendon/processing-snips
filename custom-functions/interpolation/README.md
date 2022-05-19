@@ -55,7 +55,7 @@ The inverse function returns t, a value between 0.0 and 1.0 given a value betwee
 
 **t amt**|**v given t (lerp)**|**difference**|**v value**|**t given v (inv. lerp)**
 :-----:|:-----:|:-----:|:-----:|:-----:
-0.0| 0.0| 10| 0| 0.0
+0.0| 0.0| 0| 0| 0.0
 0.1| 10.0| 10| 10.0| 0.1
 0.2| 20.0| 10| 20.0| 0.2
 0.3| 30.0| 10| 30.0| 0.3
