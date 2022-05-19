@@ -1,7 +1,7 @@
 /**************************************************************
  Project:  Creating interpolation and inverse interpolation
            functions. All the non linear function were based
-           around the easing functions by Anrey Sitnik and 
+           around the easing functions by Andrey Sitnik and 
            Ivan Solovev from easings.net. The inverse
            interpolation functions are my own.
            
@@ -22,13 +22,13 @@
  
 // elements needed for interpolation
 float t = 0.0;          // t is a value between 0.0 and 1.0 used for interpolation.
-                        // sometimes consider in terms of time or frames
+                        // usually consider in terms of time or frames
 float tspd = 0.005;     // tspd is the value at which t grows per frame
 
 // display blocks for showing example, curve, and inverse
-Block bQuadIn;
-Block bQuadOut;
-Block bQuadInOut;
+Block blockIn;
+Block blockOut;
+Block blockInOut;
 
 // styling elements for project
 PFont font;                
@@ -52,25 +52,30 @@ void setup() {
   textAlign(CENTER, CENTER);
   
   // display interpolation blocks
-  bQuadInOut = new Block();
-  bQuadIn = new Block();
-  bQuadOut = new Block();
+  blockIn = new Block();
+  blockOut = new Block();
+  blockInOut = new Block();
   
   // for testing values coming in and out of functions
-  // t steps passed into interpolation function
-  ArrayList<Float> tvalues = new ArrayList<Float>(); 
-  // result of interpolation when passing in t value between 0.0 and 1.0
-  ArrayList<Float> values = new ArrayList<Float>();
-  //for(float i = 0; i < 1.0; i+=0.1) {
-  //  tvalues.add(i);
-  //  values.add(qerpInOut(0, 255, i));
-  //}
-  
-  //for(int i = 0; i < tvalues.size(); i++) {
-  //  // print t step, intep result given t, inverse given inter result: should return initial t step
-  //  print(tvalues.get(i), values.get(i), qerpInOutInverse(0, 255, values.get(i)));
-  //  println();
-  //}
+  float priorResult = 0.0;
+  for(float i = 0; i < 1.01; i+=0.1) {
+    float ival = (float)(Math.round(i * Math.pow(10, 1))
+                 / Math.pow(10, 1));
+    float lerpResult = qerpIn(0, 100, ival);
+    lerpResult = (float)(Math.round(lerpResult * Math.pow(10, 1))
+                 / Math.pow(10, 1));
+    float invLerpResult = qerpInInverse(0, 100, lerpResult);
+    invLerpResult = (float)(Math.round(invLerpResult * Math.pow(10, 1))
+                 / Math.pow(10, 1));
+    
+    float dif = lerpResult - priorResult;
+    dif = (float)(Math.round(dif * Math.pow(10, 1))
+                 / Math.pow(10, 1));
+    priorResult = lerpResult;
+                            
+    println(ival + ", " + lerpResult  + ", " + dif  + ", " + lerpResult  + ", " + invLerpResult);
+    
+  }
 }
 
 /**************************************************************
@@ -96,19 +101,19 @@ void setup() {
      float interp = qerpIn(0, 255, t);
      float inverse_time = qerpInInverse(0, 255, interp);
      float inverse_raw = qerpInInverse(0, 200, rawNum);
-     bQuadIn.update(t, rawNum, interp, inverse_time, inverse_raw);
+     blockIn.update(t, rawNum, interp, inverse_time, inverse_raw);
      
      // out function updates
      interp = qerpOut(0, 255, t);
      inverse_time = qerpOutInverse(0, 255, interp);
      inverse_raw = qerpOutInverse(0, 200, rawNum);
-     bQuadOut.update(t, rawNum, interp, inverse_time, inverse_raw);
+     blockOut.update(t, rawNum, interp, inverse_time, inverse_raw);
      
      // in out function updates
      interp = qerpInOut(0, 255, t);
      inverse_time = qerpInOutInverse(0, 255, interp);
      inverse_raw = qerpInOutInverse(0, 200, rawNum);
-     bQuadInOut.update(t, rawNum, interp, inverse_time, inverse_raw);
+     blockInOut.update(t, rawNum, interp, inverse_time, inverse_raw);
      
      t += tspd;
      if(t > 1.0) {       
@@ -129,9 +134,9 @@ void setup() {
     
     // reset prior to animating again
     case 3:        
-    bQuadIn.reset();
-    bQuadOut.reset();
-    bQuadInOut.reset();
+    blockIn.reset();
+    blockOut.reset();
+    blockInOut.reset();
     
     rawNum = 0;
     t = 0.0;
@@ -150,21 +155,27 @@ void setup() {
    text("Out", 75, 325);
    text("In/Out", 75, 475);
    
+   text("v", 245, 175);
+   text("t", 300, 230);
+   text("v", 395, 175);
+   text("t", 450, 230);
+   
    // in display
-   bQuadIn.display(100, 125, "Example");
-   bQuadIn.displayInterpolation(250, 125, "Graph");
-   bQuadIn.displayInverse(400, 125, "Inverse");
+   blockIn.display(100, 125, "Example");
+   blockIn.displayInterpolation(250, 125, "Graph");
+   blockIn.displayInverse(400, 125, "Inverse");
    
    // out display
-   bQuadOut.display(100, 275, "");
-   bQuadOut.displayInterpolation(250, 275, "");
-   bQuadOut.displayInverse(400, 275, "");
+   blockOut.display(100, 275, "");
+   blockOut.displayInterpolation(250, 275, "");
+   blockOut.displayInverse(400, 275, "");
    
    // in out display
-   bQuadInOut.display(100, 425, "");
-   bQuadInOut.displayInterpolation(250, 425, "");
-   bQuadInOut.displayInverse(400, 425, "");
-     
+   blockInOut.display(100, 425, "");
+   blockInOut.displayInterpolation(250, 425, "");
+   blockInOut.displayInverse(400, 425, "");
+   
+   //saveFrame("output/quad_interp_####.png");    
  }
  
 /**
@@ -183,7 +194,7 @@ float linearLerp(int a, int b, float t) {
 
 /**
 * Inverse function for linear interpolation. Pass a value
-* between the frist and second value to get the corresponding 
+* between the first and second value to get the corresponding 
 * value between 0.0 and 1.0. 
 *
 * @param {int}   a      first value
@@ -191,7 +202,7 @@ float linearLerp(int a, int b, float t) {
 * @param {float} v      value between first and second value
 * @return               value between 0.0 and 1.0 given v per linear easing
 */
-float LinearLerpInverse(int a, int b, float v) {
+float lerpInverse(int a, int b, float v) {
   if(v <= a) return 0.0;
   if(v >= b) return 1.0;
   return (v - a) / (b - a);
