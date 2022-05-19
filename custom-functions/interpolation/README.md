@@ -127,6 +127,12 @@ Enjoy!
 <img alt="quad interpolation" width="600" align="center" src="https://github.com/yahirRendon/processing-snips/blob/main/custom-functions/interpolation/interpolation-code/data/quad_interp_anim.gif"/>
 </p>
 
+<p align="center">
+<img alt="exponential interpolation" width="600" align="center" src="https://github.com/yahirRendon/processing-snips/blob/main/custom-functions/interpolation/interpolation-code/data/expo_interp_anim.gif"/>
+</p>
+
+
+
 
 <!-- <p align="center">
   <img alt="Trominotris" width="300" align="center" src="https://github.com/yahirRendon/veiled-project/blob/main/projects/binary_message_public/output/binary_msg_visual.png" alt="visual"/>
