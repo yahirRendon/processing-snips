@@ -26,7 +26,7 @@ void setup() {
   alphaValue = 30;
   
   // initialize with position x, y start, stop, initial value, and name
-  dial = new Dial(150, 150, 0, 255, alphaValue, "Dial");
+  dial = new Dial(150, 150, 0, 255, alphaValue, "alpha amt");
 }
 
 /**************************************************************
