@@ -285,8 +285,6 @@ class Dial {
     }
   }
  
- 
- 
   /**
   * Check if the dial is selected
   *
@@ -300,7 +298,6 @@ class Dial {
     }
   }
 }
-
 
 /*
  * simple class for creating a buttons that works with the dial class.
