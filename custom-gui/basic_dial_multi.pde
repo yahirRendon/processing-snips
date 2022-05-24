@@ -239,7 +239,7 @@ class Dial {
     
     // display buttons and description when active
     for(int i = 0; i < buttons.length; i++) {
-      buttons[i].display("TEXT");
+      buttons[i].display();
       if(buttons[i].active()) {
         text(buttons[i].getDescription(), x, y + len + 25);
       }
@@ -318,45 +318,13 @@ class ButtonDial {
   float value;           // value of button (modified when active)
   float min;             // min value
   float max;             // max value
-  
-  color cBackground;     // background color
-  color cForeground;     // foreground olor
-  color cName;           // name color
-  color cActive;         // color when dial active
-  
-  /*
-   * Constructor method for creating a button
-   *
-   * @param _x              the x positon of the button
-   * @param _y              the y position of the button
-   * @param _name           initial boolean value of button
-   * @param _description    initial boolean value of button
-   * @param _initState      inital boolean state/value of button
-   * @param _min            min value of button
-   * @param _max            max value of button
-   * @param _initialValue   initial value of button
-   */
-  ButtonDial(int _x, int _y, String _name, String _description, boolean _initState, float _min, float _max, float _initialValue) {
-    x = _x;
-    y = _y;
-    name = _name;
-    description = _description;
-    state = _initState;
-    w = 50;
-    h = 20;
-    
-    value = _initialValue;
-    min = _min;
-    max = _max;
-    
-    cBackground = color(150);
-    cForeground = color(80);
-    cName = color(80);
-    cActive =color(0);   
-  }
+
+  color cNameTrue;       // name color when true
+  color cNameFalse;      // name color when false
+  color cNameActive;     // name color when active
   
   /*
-   * 2nd constructor method for creating a button
+   * constructor method for creating a button
    *
    * @param _name           initial boolean value of button
    * @param _description    initial boolean value of button
@@ -378,10 +346,9 @@ class ButtonDial {
     min = _min;
     max = _max;
     
-    cBackground = color(150);
-    cForeground = color(80);
-    cName = color(80);
-    cActive =color(0);   
+    cNameTrue = color(80);
+    cNameFalse = color(150);
+    cNameActive =color(0);  
   }
   
   /**
@@ -450,61 +417,24 @@ class ButtonDial {
   }
   
   /**
-  * display the button in rectangle form
-  */
-  void displayRect() {
-    rectMode(CORNER);
-    
-    if (state) {
-      fill(cForeground);
-    } else {
-      fill(cBackground);      
-    } 
-    if(active()) {
-      fill(cActive);
-    }
-
-    rect(x, y, w, h, 5);   
-    textSize(12);
-
-    fill(cName);
-    text(name, x + (w/2), y + (h/2));
-  }
-  
-  /**
   * display the button with just text
   */
-  void displayText() { 
-    if (state) {
-      fill(cForeground);
-    } else {
-      fill(cBackground);      
-    } 
+  void display() {
+    textAlign(CENTER, CENTER);
+    
     if(active()) {
-      fill(cActive);
-    }
+        fill(cNameActive);
+      } else {
+      if(state) {
+        fill(cNameTrue);
+      } else {
+        fill(cNameFalse);
+      }
+    } 
       
     textSize(12);   
     text(name, x + (w/2), y + (h/2));
-  }
   
-  /**
-  * display the button
-  *
-  * @param {String}      the display type RECT | TEXT
-  */
-  void display(String _type) {
-    textAlign(CENTER, CENTER);
-    switch(_type) {    
-      case "TEXT":
-        displayText();
-      break;
-      case "RECT":
-      default:
-        displayRect();     
-      break;
-      
-    }
   }
   
   /**
