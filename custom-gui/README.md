@@ -25,9 +25,9 @@ The only challenge faced with creating GUI elements had to do with organizing an
 </p> -->
 
 <h3 align="center"><a href="https://github.com/yahirRendon/processing-snips/blob/main/custom-gui/basic_dial_button.pde">Dial Multi</a></h3>
-<!-- <p align="center">
-<img alt="dial multi" width="600" align="center" src="https://github.com/yahirRendon/processing-snips/blob/main/custom-functions/interpolation/interpolation-code/data/expo_interp_anim.gif"/>
-</p> -->
+<p align="center">
+<img alt="dial multi" width="600" align="center" src="https://github.com/yahirRendon/processing-snips/blob/main/custom-gui/data/dial_multi_anim.gif"/>
+</p>
 
 
 
