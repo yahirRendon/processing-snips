@@ -255,14 +255,16 @@ class Dial {
   *
   */
   void updateButtonState() {
-    
     for(int i = 0; i < buttons.length; i++) {
       if(buttons[i].active()) {
         valueIndex = i;
-        buttons[i].state = true;
-        
-      } else {
-        buttons[i].state = false;
+        buttons[i].state = true;  
+      }
+    }
+    
+    for(int i = 0; i < buttons.length; i++) {
+      if(valueIndex != i) {
+        buttons[i].state = false;  
       }
     }
     dialMin = buttons[valueIndex].getMin();
