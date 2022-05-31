@@ -1,8 +1,10 @@
 <h1 align="center">Interpolation Functions</h1>
 
 <p>
-I watched a presentation from Indiecade Europe 2019 in <a href="https://www.youtube.com/watch?v=R6UB7mVO3fY">Freya Holmer</a> discussed the simple yet power math we don't talk enough about within in game development. The first example provided was that of linear interpolation, also known as lerp. However, what I was most intrigued by was the introduction of inverse interpolation. I’ve used lerp in Processing previously but I realized it doesn’t have a built-in function for inverse lerp. I decided to create my own while also explore more nonlinear interpolations functions.
+I watched a presentation from Indiecade Europe 2019 in <a href="https://www.youtube.com/watch?v=R6UB7mVO3fY">Freya Holmer</a> discussed the simple yet power math we don't talk enough about within in game development. The first example provided was that of linear interpolation, also known as lerp. However, what I was most intrigued by was the introduction of inverse interpolation. I’ve used lerp in Processing previously but I realized it doesn’t have a built-in function for inverse lerp*. I decided to create my own while also explore more nonlinear interpolations functions.
 </p>
+<p>
+*correction: while working on another project I was looking at processing source code and it does have a built in inverse lerp function called norm(). However, it doesn't have any nonlinear interpolation and their inverse functions so this project was still worth it. 
 
 <h3>Goal</h3>
 <p>
