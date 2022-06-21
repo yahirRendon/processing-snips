@@ -12,8 +12,8 @@
   /**
    * getting the mid point between two points
    *
-   * @param {PVector}   a      first value
-   * @param {PVector}   b      second value
+   * @param {PVector}   a      first point
+   * @param {PVector}   b      second point
    * @return a point between a and b
    */
   PVector midpoint(PVector a, PVector b) {
@@ -28,8 +28,8 @@
   /**
    * getting the mid point between two points
    *
-   * @param {PVector}   a      first value
-   * @param {PVector}   b      second value
+   * @param {PVector}   a      first point
+   * @param {PVector}   b      second point
    * @param {float}    t      amount between 0.0 and 1.0
    * @return a point between a and b given t
    */
@@ -37,6 +37,25 @@
     float x = lerp(a.x, b.x, t);
     float y = lerp(a.y, b.y, t);
     return new PVector(x, y);
+  }
+ ```
+</details>
+
+<p>Get the angle from one point or another. This can be useful for working with dials or determing impact angles</p>
+
+<details>  
+  <summary>Angel</summary>
+   
+  ```java
+  /**
+   * get the angle between two points
+   *
+   * @param {PVector}   a      first point
+   * @param {PVector}   b      second second
+   * @return the angle in radians from a to b
+   */
+  float getAngle(PVector a, PVector b) {
+    return atan2(b.y - a.y, b.x - a.x);
   }
  ```
 </details>
