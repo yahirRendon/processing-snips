@@ -40,11 +40,11 @@
   }
  ```
 </details>
-
+<h1></h1>
 <p>Get the angle from one point or another. This can be useful for working with dials or determing impact angles</p>
 
 <details>  
-  <summary>Angel</summary>
+  <summary>Angle</summary>
    
   ```java
   /**
