@@ -30,7 +30,7 @@
    *
    * @param {PVector}   a      first point
    * @param {PVector}   b      second point
-   * @param {float}    t      amount between 0.0 and 1.0
+   * @param {float}     t      amount between 0.0 and 1.0
    * @return a point between a and b given t
    */
   PVector midLerp(PVector a, PVector b, float t) {
@@ -42,7 +42,7 @@
 </details>
 
 <h1></h1>
-<p>Get the angle from one point or another. This can be useful for working with dials or determing impact angles</p>
+<p>Get the angle from one point to another. This can be useful for working with dials or determing impact angles</p>
 
 <details>  
   <summary>Angle</summary>
