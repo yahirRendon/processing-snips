@@ -12,11 +12,12 @@
  
 ## Demo
 <p align="center">
- 
-  <img width="400" align="center" src="https://github.com/yahirRendon/processing-snips/blob/main/sine_easing_square_line/data/sine_easing_square_line_anim.gif" alt="animation"/>
+  <img alt="animation"
+       align="center" 
+       width="400" src="https://github.com/yahirRendon/processing-snips/blob/main/path-tracing/path_tracing_ex.gif" />
 </p>
 
 ## Usage Notes
 <p>- Processing 3.5.4
 <br>- Ensure the .pde file is contained within a folder of the exact same name
-  </p>
+</p>
