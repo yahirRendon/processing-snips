@@ -1,6 +1,6 @@
 /******************************************************************************
  Project:  I needed to move between points for another project so created a
-           simple class that traces a path between a list of points
+ simple class that traces a path between a list of points. 
  
  Author:   Yahir
  Date:     May 2023
@@ -17,18 +17,18 @@ PathTracer trace;                // path tracer object
  * 
  *****************************************************************************/
 void setup() {
-  size(900, 900);
-  
+  size(400, 400);
+
   // populate node points
   ArrayList<PVector> nodes = new ArrayList<PVector>();  
-  for (int i = 0; i < 5; i++) {
-    int xpos = int(random(100, 800));
-    int ypos = int(random(100, 800));
+  for (int i = 0; i < 3; i++) {
+    int xpos = int(random(50, 350));
+    int ypos = int(random(50, 350));
     nodes.add(new PVector(xpos, ypos));
   }
-  
-  // initialize path tracer object (nodes list, trace speed)
-  trace = new PathTracer(nodes, 1);
+
+  // initialize path tracer object (nodes list, trace speed, direction, type)
+  trace = new PathTracer(nodes, 1, "REVERSE", "SINGLE");
 }
 
 /******************************************************************************
@@ -56,30 +56,30 @@ class PathTracer {
   float angle;                 // angle to next path point
   float radius;                // radius increments from cur to next path point
   ArrayList<PVector> path;     // list of points in path
-  
+  String type;
+  String direction;
+  boolean endLoop;
+
   /******************************************************************************
    * constructor
    * 
    * @param  _nodes    the list of points within path
    * @param  _spd      the tracing speed
-
+   
    *****************************************************************************/
-  PathTracer(ArrayList<PVector> _nodes, float _spd) {
+  PathTracer(ArrayList<PVector> _nodes, float _spd, String _dir, String _type) {
     path = _nodes;
+    traceSpeed = _spd;
+    direction = _dir;
+    type = _type;
+
     if (path.size() < 2) {
       println("path size needs at least 2 points");
     } else {
-      curIndex = 0;
-      nextIndex = 1;
-      atTarget = false;
-      traceSpeed = _spd;
-      x = path.get(curIndex).x;
-      y = path.get(curIndex).y;
-      angle = atan2(path.get(nextIndex).y - y, path.get(nextIndex).x - x);
-      radius = 0;
+      resetTrace();
     }
   }
-  
+
   /******************************************************************************
    * 
    * update the x and y position 
@@ -87,9 +87,11 @@ class PathTracer {
    *****************************************************************************/
   void update() { 
     // move x and y positions
-    radius += traceSpeed;
-    x = path.get(curIndex).x + cos(angle) * radius;
-    y = path.get(curIndex).y + sin(angle) * radius;
+    if (!endLoop) {
+      radius += traceSpeed;
+      x = path.get(curIndex).x + cos(angle) * radius;
+      y = path.get(curIndex).y + sin(angle) * radius;
+    }
 
     // check distance to next point and set limit check
     float distanceToNext = dist(x, y, path.get(nextIndex).x, path.get(nextIndex).y);
@@ -98,19 +100,112 @@ class PathTracer {
 
     // update once arrived at next path point
     if (distanceToNext < limit) {
-      curIndex++;
-      nextIndex++;
-      if (curIndex >= path.size()) curIndex = 0;     
-      if (nextIndex >= path.size()) nextIndex = 0;
-
-      x = path.get(curIndex).x;
-      y = path.get(curIndex).y;
-
-      angle = atan2(path.get(nextIndex).y - y, path.get(nextIndex).x - x);
-      radius = 0;
+      switch(direction) {
+      case "REVERSE":
+        reverseTrace();
+        break;
+      case "FORWARD":
+      default:
+        forwardTrace();
+        break;
+      }
     }
   }
+
+  /******************************************************************************
+   * 
+   * trace path in normal mode
+   * 
+   *****************************************************************************/
+  void forwardTrace() {
+    curIndex++;
+    nextIndex++;
+    
+    if (curIndex >= path.size()) curIndex = 0;     
+    if (nextIndex >= path.size()) nextIndex = 0;
+    if (type.equals("SINGLE") && nextIndex == 0) endLoop = true;
+
+    x = path.get(curIndex).x;
+    y = path.get(curIndex).y;
+
+    angle = atan2(path.get(nextIndex).y - y, path.get(nextIndex).x - x);
+    radius = 0;
+  }
+
+  /******************************************************************************
+   * 
+   * trace in path in reverse order
+   * 
+   *****************************************************************************/
+  void reverseTrace() {
+    curIndex--;
+    nextIndex--;
+
+    if (curIndex < 0) curIndex = path.size() - 1;     
+    if (nextIndex < 0) nextIndex = path.size() - 1;
+    if (type.equals("SINGLE") && nextIndex == 0) endLoop = true;
+
+    x = path.get(curIndex).x;
+    y = path.get(curIndex).y;
+
+    angle = atan2(path.get(nextIndex).y - y, path.get(nextIndex).x - x);
+    radius = 0;
+  }
   
+  /******************************************************************************
+   * 
+   * reset to beginning of trace conditions
+   * 
+   *****************************************************************************/
+  void resetTrace() {
+    atTarget = false;
+      endLoop = false;
+      curIndex = 0;
+      nextIndex = 1;
+      if (direction == "REVERSE") {
+        curIndex = 0;
+        nextIndex = path.size() - 1;
+      }
+      x = path.get(curIndex).x;
+      y = path.get(curIndex).y;
+      angle = atan2(path.get(nextIndex).y - y, path.get(nextIndex).x - x);
+      radius = 0;
+  }
+  
+  /******************************************************************************
+   * 
+   * simple way to set path direction
+   * 
+   *****************************************************************************/
+  void setDirection(String _dir) {
+    direction = _dir;
+    resetTrace();
+  }
+  
+  /******************************************************************************
+   * 
+   * simple way to set path type
+   * 
+   *****************************************************************************/
+  void setType(String _type) {
+    direction = _type;
+    resetTrace();
+  }
+  
+  /******************************************************************************
+   * 
+   * set a new path and reset tracer
+   * 
+   *****************************************************************************/
+  void updatePath(ArrayList<PVector> _nodes) {
+     if (_nodes.size() < 2) {
+      println("Cannot update path: Path needs at least 2 points");
+    } else {
+      path = _nodes;
+      resetTrace();
+    }
+  }
+
   /******************************************************************************
    * 
    * display the path points and x and y location along path
